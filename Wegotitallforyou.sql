@@ -32,13 +32,16 @@ GO
 CREATE TABLE [invoice] (
   [id] integer PRIMARY KEY,
   [date_created] date,
-  [product_list] integer[],
   [customer_id] integer,
   [salesrep_id] integer
 )
 GO
 
-ALTER TABLE [invoice] ADD FOREIGN KEY ([product_list]) REFERENCES [product] ([id])
+CREATE TABLE [orderlist] (
+  [invoice_id] integer,
+  [quantity] integer,
+  [product_id] integer
+)
 GO
 
 ALTER TABLE [invoice] ADD FOREIGN KEY ([customer_id]) REFERENCES [customer] ([id])
@@ -48,4 +51,10 @@ ALTER TABLE [invoice] ADD FOREIGN KEY ([salesrep_id]) REFERENCES [salesrep] ([id
 GO
 
 ALTER TABLE [product] ADD FOREIGN KEY ([vendor_id]) REFERENCES [vendor] ([id])
+GO
+
+ALTER TABLE [orderlist] ADD FOREIGN KEY ([invoice_id]) REFERENCES [invoice] ([id])
+GO
+
+ALTER TABLE [orderlist] ADD FOREIGN KEY ([product_id]) REFERENCES [product] ([id])
 GO
